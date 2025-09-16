@@ -1,5 +1,297 @@
-<html>
-  <body>
-    hello world
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6-Day General Fitness Routine</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals with Teal Accent -->
+    <!-- Application Structure Plan: The application uses a top navigation bar to anchor the user and allow quick jumps to key sections: Philosophy, The Plan, Protocols, and Lifestyle. The core of the app is the "The Plan" section, which features an interactive daily schedule. Users click a day (e.g., "Monday") to dynamically display that specific workout's details. This task-oriented design prevents information overload by showing only relevant information, making the dense workout plan easy to navigate and consume daily. This structure was chosen for its superior usability over a long, static document, empowering the user to actively engage with their daily routine. -->
+    <!-- Visualization & Content Choices: Report Info -> 6-Day Workout Plan -> Goal: Organize & Inform -> Viz/Presentation Method: Interactive daily tabs and structured content cards. -> Interaction: User clicks a day button, JS dynamically renders the corresponding workout details in a clean, table-like format using HTML/CSS. This avoids overwhelming the user. Philosophy and lifestyle info are presented in distinct, easily digestible cards. -> Justification: This interactive approach is more engaging and practical for a user following a daily routine than a static page. It transforms the report from a document to a functional tool. -> Library/Method: Vanilla JS for interaction, Tailwind CSS for styling. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f7f4;
+            color: #1a1a1a;
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover {
+            color: #0d9488;
+            border-bottom-color: #0d9488;
+        }
+        .day-btn {
+            transition: all 0.3s;
+        }
+        .day-btn.active {
+            background-color: #0d9488;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(13, 148, 136, 0.3);
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white sticky top-0 z-10 shadow-md">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <h1 class="text-xl md:text-2xl font-bold text-teal-700">6-Day Fitness Planner</h1>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#philosophy" class="nav-link font-semibold text-gray-600 pb-1">Philosophy</a>
+                    <a href="#plan" class="nav-link font-semibold text-gray-600 pb-1">The Plan</a>
+                    <a href="#protocols" class="nav-link font-semibold text-gray-600 pb-1">Protocols</a>
+                    <a href="#lifestyle" class="nav-link font-semibold text-gray-600 pb-1">Lifestyle</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <section id="intro" class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-800 mb-4">Your Science-Backed Weekly Gym Routine</h2>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                This program is designed for balanced muscle growth, strength, and overall fitness. It leverages a high-frequency, scientifically-proven Upper/Lower split to maximize results while managing recovery.
+            </p>
+        </section>
+
+        <section id="philosophy" class="mb-16 scroll-mt-20">
+            <h3 class="text-3xl font-bold text-center mb-10 text-gray-800">Foundational Philosophy</h3>
+            <div class="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="card p-6">
+                    <h4 class="font-bold text-xl mb-3 text-teal-700">Upper/Lower Split Rationale</h4>
+                    <p class="text-gray-600">This routine utilizes an Upper/Lower split, hitting each muscle group three times per week. Research by scientists like Dr. Brad Schoenfeld shows that stimulating muscle protein synthesis (MPS) more frequently can lead to superior hypertrophy compared to traditional "body-part splits". Training a muscle group every 48-72 hours keeps it in a more consistent anabolic state, promoting better growth and recovery by not annihilating a single muscle group in one session.</p>
+                </div>
+                <div class="card p-6">
+                    <h4 class="font-bold text-xl mb-3 text-teal-700">Progressive Overload</h4>
+                    <p class="text-gray-600">This is the cornerstone of all progress. To continuously build muscle and strength, you must consistently challenge your body. Implement this by: <br>1. <strong>Increasing Weight:</strong> Once you can comfortably hit the top of your rep range for all sets, add a small amount of weight. <br>2. <strong>Increasing Reps:</strong> Aim to add one more rep to your sets each week until you reach the top of the prescribed rep range. <br>3. <strong>Improving Form:</strong> Enhancing your technique increases muscle activation and is a form of progression.</p>
+                </div>
+                <div class="card p-6">
+                    <h4 class="font-bold text-xl mb-3 text-teal-700">Compound vs. Isolation</h4>
+                    <p class="text-gray-600">Our program prioritizes multi-joint compound exercises (squats, presses, rows). These movements are highly efficient, recruiting maximum muscle mass and stimulating a greater hormonal response for growth and strength. Isolation exercises (like curls or extensions) are used strategically to target specific muscles and add volume, but they are supplementary to the core compound lifts.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="plan" class="mb-16 scroll-mt-20">
+            <h3 class="text-3xl font-bold text-center mb-10 text-gray-800">The Weekly Plan</h3>
+            <div id="day-selector" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8">
+                <button class="day-btn active font-semibold py-2 px-4 rounded-full bg-white shadow" data-day="monday">Monday</button>
+                <button class="day-btn font-semibold py-2 px-4 rounded-full bg-white shadow" data-day="tuesday">Tuesday</button>
+                <button class="day-btn font-semibold py-2 px-4 rounded-full bg-white shadow" data-day="wednesday">Wednesday</button>
+                <button class="day-btn font-semibold py-2 px-4 rounded-full bg-white shadow" data-day="thursday">Thursday</button>
+                <button class="day-btn font-semibold py-2 px-4 rounded-full bg-white shadow" data-day="friday">Friday</button>
+                <button class="day-btn font-semibold py-2 px-4 rounded-full bg-white shadow" data-day="saturday">Saturday</button>
+                 <button class="day-btn font-semibold py-2 px-4 rounded-full bg-white shadow" data-day="sunday">Sunday</button>
+            </div>
+
+            <div id="workout-display" class="card p-6 md:p-8 min-h-[400px]">
+            </div>
+        </section>
+        
+        <section id="protocols" class="mb-16 scroll-mt-20">
+            <h3 class="text-3xl font-bold text-center mb-10 text-gray-800">Warm-up & Cool-down</h3>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card p-6">
+                    <h4 class="font-bold text-xl mb-3 text-teal-700">Warm-up Protocol</h4>
+                    <p class="mb-4 text-gray-600">Always perform this before your workout to prepare your body and reduce injury risk.</p>
+                    <ul class="space-y-2 text-gray-700 list-disc list-inside">
+                        <li><strong>General Warm-up (5 min):</strong> Light cardio like incline walking, cycling, or elliptical.</li>
+                        <li><strong>Dynamic Stretching (5-10 min):</strong>
+                            <ul class="pl-5 mt-1 space-y-1 list-['-_'] list-inside">
+                                <li><strong>Upper Body Days:</strong> Band Pull-Aparts, Thoracic Rotations, Arm Circles.</li>
+                                <li><strong>Lower Body Days:</strong> Leg Swings (forward & sideways), Bodyweight Goblet Squats, Walking Lunges.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card p-6">
+                    <h4 class="font-bold text-xl mb-3 text-teal-700">Cool-down Protocol</h4>
+                    <p class="mb-4 text-gray-600">Perform these static stretches post-workout to improve flexibility.</p>
+                    <ul class="space-y-2 text-gray-700 list-disc list-inside">
+                        <li><strong>Hold each stretch for 30 seconds.</strong>
+                             <ul class="pl-5 mt-1 space-y-1 list-['-_'] list-inside">
+                                <li>Chest Stretch in Doorway</li>
+                                <li>Lat Stretch (holding onto a post)</li>
+                                <li>Standing Quad Stretch</li>
+                                <li>Seated Hamstring Stretch</li>
+                                <li>Figure-Four Stretch (for glutes)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="lifestyle" class="scroll-mt-20">
+            <h3 class="text-3xl font-bold text-center mb-10 text-gray-800">Nutrition & Recovery</h3>
+             <div class="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="card p-6 text-center">
+                    <div class="text-4xl mb-3">💧</div>
+                    <h4 class="font-bold text-xl mb-3 text-teal-700">Hydration</h4>
+                    <p class="text-gray-600">Drink plenty of water throughout the day. Proper hydration is essential for performance, recovery, and overall health. Aim for 2-3 liters per day, plus more during your workout.</p>
+                </div>
+                <div class="card p-6 text-center">
+                    <div class="text-4xl mb-3">🍗</div>
+                    <h4 class="font-bold text-xl mb-3 text-teal-700">Protein Intake</h4>
+                    <p class="text-gray-600">To support muscle repair and growth, aim for 1.6-2.2 grams of protein per kilogram of your body weight daily. Distribute this intake across several meals for optimal absorption.</p>
+                </div>
+                <div class="card p-6 text-center">
+                    <div class="text-4xl mb-3">😴</div>
+                    <h4 class="font-bold text-xl mb-3 text-teal-700">Sleep</h4>
+                    <p class="text-gray-600">Your body grows and repairs itself during sleep. Prioritize 7-9 hours of quality sleep per night. This is non-negotiable for recovery and progress.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="text-center py-8 mt-12 border-t border-gray-200">
+        <p class="text-gray-500">Train smart, stay consistent, and enjoy the process.</p>
+    </footer>
+
+    <script>
+        const workoutData = {
+            monday: {
+                title: 'Upper Body (Strength Focus)',
+                exercises: [
+                    { name: 'Barbell Bench Press', sets: '4 x 5-8', rest: '120s', cue: "Keep your shoulder blades retracted and pinned to the bench.", alt: 'Heavy Dumbbell Bench Press' },
+                    { name: 'Pendlay Row', sets: '4 x 6-8', rest: '120s', cue: "Initiate the pull with your back muscles, not by jerking your arms.", alt: 'T-Bar Row' },
+                    { name: 'Seated Overhead Press (Dumbbell)', sets: '3 x 6-10', rest: '90s', cue: "Press dumbbells overhead without arching your lower back excessively.", alt: 'Machine Shoulder Press' },
+                    { name: 'Weighted Pull-Ups', sets: '3 x 5-8', rest: '120s', cue: "Pull your chest towards the bar, leading with your elbows.", alt: 'Lat Pulldown Machine' },
+                    { name: 'Triceps Dips (Weighted)', sets: '3 x 8-12', rest: '60s', cue: "Lower your body until your elbows are at a 90-degree angle.", alt: 'Triceps Pushdown' },
+                ]
+            },
+            tuesday: {
+                title: 'Lower Body (Strength Focus)',
+                exercises: [
+                    { name: 'Barbell Back Squat', sets: '4 x 5-8', rest: '180s', cue: "Keep your chest up and drive through your heels to stand up.", alt: 'Leg Press' },
+                    { name: 'Romanian Deadlift', sets: '4 x 6-10', rest: '120s', cue: "Hinge at your hips, keeping a slight bend in your knees and a flat back.", alt: 'Good Mornings' },
+                    { name: 'Leg Press', sets: '3 x 8-10', rest: '90s', cue: "Control the negative; don't let the weight slam down.", alt: 'Hack Squat' },
+                    { name: 'Walking Lunges (Dumbbell)', sets: '3 x 10-12 per leg', rest: '90s', cue: "Take a controlled step forward, lowering your hips until both knees are bent at a 90-degree angle.", alt: 'Bulgarian Split Squats' },
+                    { name: 'Standing Calf Raises', sets: '4 x 10-15', rest: '60s', cue: "Pause at the top of the movement and get a full stretch at the bottom.", alt: 'Seated Calf Raises' },
+                ]
+            },
+            wednesday: {
+                title: 'Upper Body (Hypertrophy Focus)',
+                exercises: [
+                    { name: 'Incline Dumbbell Press', sets: '3 x 8-12', rest: '90s', cue: "Focus on stretching the chest at the bottom and squeezing at the top.", alt: 'Incline Smith Machine Press' },
+                    { name: 'Seated Cable Row', sets: '3 x 10-15', rest: '75s', cue: "Pull the handle to your sternum, retracting your shoulder blades.", alt: 'Machine Row' },
+                    { name: 'Lateral Raises', sets: '4 x 12-15', rest: '60s', cue: "Lead with your elbows and raise the dumbbells out to your sides.", alt: 'Cable Lateral Raises' },
+                    { name: 'Lat Pulldown', sets: '3 x 10-12', rest: '75s', cue: "Drive your elbows down and back to engage the lats.", alt: 'Assisted Pull-Ups' },
+                    { name: 'Skull Crushers', sets: '3 x 10-15', rest: '60s', cue: "Keep your upper arms stationary throughout the movement.", alt: 'Overhead Tricep Extension' },
+                    { name: 'Barbell Curls', sets: '3 x 8-12', rest: '60s', cue: "Avoid using momentum; control the weight on the way up and down.", alt: 'Dumbbell Curls' },
+                ]
+            },
+            thursday: {
+                title: 'Lower Body (Hypertrophy Focus)',
+                exercises: [
+                    { name: 'Leg Press', sets: '4 x 10-15', rest: '90s', cue: "Use a full range of motion, going as deep as you can comfortably.", alt: 'Hack Squat' },
+                    { name: 'Leg Curls (Seated or Lying)', sets: '4 x 12-15', rest: '60s', cue: "Squeeze your hamstrings at the peak of the contraction.", alt: 'Glute-Ham Raise' },
+                    { name: 'Leg Extensions', sets: '3 x 15-20', rest: '60s', cue: "Pause for a second at the top to fully contract the quads.", alt: 'Bodyweight Sissy Squats' },
+                    { name: 'Goblet Squats', sets: '3 x 12-15', rest: '75s', cue: "Keep the dumbbell close to your chest and maintain an upright torso.", alt: 'Dumbbell Front Squats' },
+                    { name: 'Hip Thrusts (Barbell)', sets: '4 x 10-15', rest: '90s', cue: "Drive through your heels and squeeze your glutes hard at the top.", alt: 'Glute Bridge Machine' },
+                    { name: 'Seated Calf Raises', sets: '4 x 15-20', rest: '60s', cue: "Focus on a deep stretch at the bottom of the movement.", alt: 'Calf Press on Leg Press Machine' },
+                ]
+            },
+            friday: {
+                title: 'Upper Body (Hypertrophy/Volume)',
+                exercises: [
+                    { name: 'Machine Chest Press', sets: '4 x 10-15', rest: '75s', cue: "Focus on a strong mind-muscle connection with your chest.", alt: 'Dumbbell Bench Press' },
+                    { name: 'T-Bar Row', sets: '4 x 10-12', rest: '90s', cue: "Keep your back straight and pull with your lats.", alt: 'Chest-Supported Dumbbell Row' },
+                    { name: 'Arnold Press', sets: '3 x 12-15', rest: '75s', cue: "Perform the movement in a smooth, controlled, rotational manner.", alt: 'Seated Dumbbell Shoulder Press' },
+                    { name: 'Straight Arm Pulldown', sets: '3 x 15-20', rest: '60s', cue: "Maintain a slight bend in your elbows and focus on the lats.", alt: 'Dumbbell Pullovers' },
+                    { name: 'Cable Triceps Pushdown', sets: '4 x 12-15', rest: '60s', cue: "Keep your elbows pinned to your sides.", alt: 'Single Arm Overhead Extension' },
+                    { name: 'Incline Dumbbell Curls', sets: '3 x 12-15', rest: '60s', cue: "Allow a full stretch of the bicep at the bottom of the movement.", alt: 'Preacher Curls' },
+                ]
+            },
+            saturday: {
+                title: 'Lower Body (Hypertrophy/Volume)',
+                exercises: [
+                    { name: 'Hack Squat', sets: '4 x 10-15', rest: '90s', cue: "Control the descent and explode up powerfully.", alt: 'Smith Machine Squats' },
+                    { name: 'Bulgarian Split Squats', sets: '3 x 10-12 per leg', rest: '90s', cue: "Focus on stability and keeping your torso upright.", alt: 'Lunges' },
+                    { name: 'Cable Pull-Throughs', sets: '4 x 15-20', rest: '60s', cue: "Squeeze your glutes to bring your hips forward; don't pull with your arms.", alt: 'Kettlebell Swings' },
+                    { name: 'Abductor Machine', sets: '3 x 15-20', rest: '60s', cue: "Control the movement, avoiding jerky motions.", alt: 'Banded Lateral Walks' },
+                    { name: 'Adductor Machine', sets: '3 x 15-20', rest: '60s', cue: "Focus on squeezing your inner thighs to bring the pads together.", alt: 'Copenhagen Planks' },
+                    { name: 'Calf Press on Leg Press', sets: '5 x 15-25', rest: '60s', cue: "Perform high reps to fully fatigue the calf muscles.", alt: 'Standing Calf Raises' },
+                ]
+            },
+            sunday: {
+                title: 'Active Recovery / Rest',
+                exercises: [
+                    { name: 'Rest is Productive', sets: '', rest: '', cue: "Your muscles grow and repair when you rest, not when you lift. This is a critical part of the program.", alt: ''},
+                    { name: 'Suggestions', sets: '', rest: '', cue: "Consider light activity to promote blood flow and aid recovery.", alt: ''},
+                    { name: 'Light Walk', sets: '30-60 min', rest: '', cue: "Enjoy a leisurely walk outdoors or on a treadmill.", alt: ''},
+                    { name: 'Mobility Work', sets: '10-15 min', rest: '', cue: "Perform full-body dynamic stretches or use a foam roller.", alt: ''},
+                    { name: 'Full Rest', sets: '', rest: '', cue: "Listen to your body. If you feel tired or sore, taking a complete day off is perfectly fine and often beneficial.", alt: ''}
+                ]
+            }
+        };
+
+        const daySelector = document.getElementById('day-selector');
+        const workoutDisplay = document.getElementById('workout-display');
+        const dayButtons = document.querySelectorAll('.day-btn');
+
+        const displayWorkout = (day) => {
+            const data = workoutData[day];
+            if (!data) return;
+
+            let html = `<h4 class="text-2xl font-bold text-teal-700 mb-6">${data.title}</h4>`;
+            html += '<div class="space-y-6">';
+
+            data.exercises.forEach(ex => {
+                 html += `
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-start pb-4 border-b border-gray-100 last:border-b-0">
+                        <div class="md:col-span-4">
+                            <p class="font-semibold text-gray-800">${ex.name}</p>
+                            ${ex.alt ? `<p class="text-sm text-gray-500 mt-1">Alt: ${ex.alt}</p>` : ''}
+                        </div>
+                        <div class="md:col-span-2"><span class="md:hidden font-bold">Sets/Reps: </span>${ex.sets}</div>
+                        <div class="md:col-span-1"><span class="md:hidden font-bold">Rest: </span>${ex.rest}</div>
+                        <div class="md:col-span-5 text-gray-600"><span class="md:hidden font-bold">Cue: </span>${ex.cue}</div>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+
+            workoutDisplay.innerHTML = html;
+        };
+
+        daySelector.addEventListener('click', (e) => {
+            if (e.target.matches('.day-btn')) {
+                const selectedDay = e.target.dataset.day;
+                
+                dayButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                e.target.classList.add('active');
+
+                displayWorkout(selectedDay);
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            displayWorkout('monday');
+        });
+    </script>
+</body>
 </html>
